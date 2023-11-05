@@ -5,9 +5,10 @@ function isValidCPF(cpf) {
 }
 
 exports.handler = async (event) => {
-  const cpfNumber = event.queryStringParameters.cpf;
-
+  const cpfNumber = event.cpf;
+  console.log('Received event:', event)
   if (!cpfNumber || !isValidCPF(cpfNumber)) {
+
     return {
       statusCode: 400,
       body: JSON.stringify({ message: 'Invalid CPF number' })
