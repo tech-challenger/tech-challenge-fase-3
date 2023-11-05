@@ -27,6 +27,5 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-      - run: cd app && npm ci
-      - run: zip -r publish.zip ./app/*
-      - run: aws lambda update-function-code --function-name=validateCPF --zip-file=fileb://publish.zip
+          zip: publish.zip
+          function_name: validateCPF
