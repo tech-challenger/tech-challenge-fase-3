@@ -1,21 +1,20 @@
 function isValidCPF(cpf) {
   const cpfRegex = /^(\d{3}\.?\d{3}\.?\d{3}-?\d{2})$/;
-
   return cpfRegex.test(cpf);
 }
 
 exports.handler = async (event) => {
   try {
-    const queryStringParameters = event.queryStringParameters;
-    
-    if (!queryStringParameters || !queryStringParameters.cpf) {
+    const requestBody = JSON.parse(event.body);
+
+    if (!requestBody || !requestBody.cpf) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ message: 'Invalid request: Missing or malformed CPF parameter' })
+        body: JSON.stringify({ message: 'Invalid request: Missing or malformed CPF parameter in the body' })
       };
     }
-    
-    const cpfNumber = queryStringParameters.cpf;
+
+    const cpfNumber = requestBody.cpf;
 
     if (!isValidCPF(cpfNumber)) {
       return {
