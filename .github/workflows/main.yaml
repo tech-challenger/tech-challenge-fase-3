@@ -7,7 +7,7 @@ on:
     - uat
     - prd
 
-  jobs:
+  job:
     deploy_lambda:
       runs-on: ubuntu-lastest
       steps:
