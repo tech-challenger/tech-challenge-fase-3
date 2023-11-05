@@ -1,0 +1,34 @@
+name: TechChallenger
+on: 
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubunt-latest
+    steps:
+     - name: Run a one-line script
+       run: echo Hello World!
+deploy-dev:
+   runs-on: ubunt-latest
+   enviroment:
+     name: dev
+   needs: build
+   steps:
+    - name: Run a one-line script
+       run: echo Hello World!
+deploy-uat:
+   runs-on: ubunt-latest
+   enviroment:
+     name: uat
+   needs: build
+   steps:
+    - name: Run a one-line script
+       run: echo Hello World!       
+
+deploy-prd:
+   runs-on: ubunt-latest
+   enviroment:
+     name: uat
+   needs: build
+   steps:
+    - name: Run a one-line script
+       run: echo Hello World!              
