@@ -1,9 +1,13 @@
-const cpf = require('cpf');
+function isValidCPF(cpf) {
+  const cpfRegex = /^(\d{3}\.?\d{3}\.?\d{3}-?\d{2})$/;
 
-exports.handler.handler = async (event) => {
-  const cpfNumber = event.queryStringParameters.cpf; 
+  return cpfRegex.test(cpf);
+}
 
-  if (!cpf.isValid(cpfNumber)) {
+exports.handler = async (event) => {
+  const cpfNumber = event.queryStringParameters.cpf;
+
+  if (!cpfNumber || !isValidCPF(cpfNumber)) {
     return {
       statusCode: 400,
       body: JSON.stringify({ message: 'Invalid CPF number' })
@@ -14,4 +18,4 @@ exports.handler.handler = async (event) => {
     statusCode: 200,
     body: JSON.stringify({ message: 'Valid CPF number' })
   };
-}
+};
