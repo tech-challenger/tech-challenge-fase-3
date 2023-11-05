@@ -5,17 +5,33 @@ function isValidCPF(cpf) {
 }
 
 exports.handler = async (event) => {
-  const cpfNumber = event.queryStringParameters.cpf;
+  try {
+    const queryStringParameters = event.queryStringParameters;
+    
+    if (!queryStringParameters || !queryStringParameters.cpf) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'Invalid request: Missing or malformed CPF parameter' })
+      };
+    }
+    
+    const cpfNumber = queryStringParameters.cpf;
 
-  if (!cpfNumber || !isValidCPF(cpfNumber)) {
+    if (!isValidCPF(cpfNumber)) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'Invalid CPF number' })
+      };
+    }
+
     return {
-      statusCode: 400,
-      body: JSON.stringify({ message: 'Invalid CPF number' })
+      statusCode: 200,
+      body: JSON.stringify({ message: 'Valid CPF number' })
+    };
+  } catch (error) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: 'Internal Server Error', error: error.message })
     };
   }
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ message: 'Valid CPF number' })
-  };
 };
