@@ -1,6 +1,6 @@
 const cpf = require('cpf');
 
-exports.handler.validateCPF = async (event) => {
+exports.handler.handler = async (event) => {
   const cpfNumber = event.queryStringParameters.cpf; 
 
   if (!cpf.isValid(cpfNumber)) {
