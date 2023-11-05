@@ -2,31 +2,32 @@ name: Deploy Lambda
 
 on:
   push:
-    branches: ["dev", "uat", "prd", "main"]
+    branches: [ "dev", "uat", "prd", "main" ]
 
 jobs:
   deploy:
     name: deploy
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.x]
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - name: serverless deploy
-        uses: serverless/github-action@v3.2    
-        with:
-          args: deploy
+      - name: Change to Serverless Service Directory
+        run: cd tech-challenge-fase-3 
+        working-directory: tech-challenge-fase-3 
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          node-version: '16.x'
+
+      - name: Install Serverless Framework
+        run: npm install -g serverless
+
+      - name: Deploy using Serverless Framework
+        run: serverless deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
