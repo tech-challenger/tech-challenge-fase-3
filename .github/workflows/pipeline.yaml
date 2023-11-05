@@ -19,11 +19,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Check Serverless Framework Configuration
-        run: |
-          ls -l   # List contents to verify the presence of 'serverless.yml' in the current directory
-          cat serverless.yml   
-
       - name: Deploy using Serverless Framework
         run: |
           npm install -g serverless  
