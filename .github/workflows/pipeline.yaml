@@ -13,11 +13,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - name: Use Node.js ${{ matix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matix.node-version }}
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with: 
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secrets-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - run: cd app && npm ci
+      - run: zip -r publish.zip ./app/*
+      - run: aws lambda update-function-code --function-name=validateCPF --zip-file=fileb://publish.zip
