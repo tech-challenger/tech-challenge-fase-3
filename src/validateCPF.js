@@ -5,7 +5,7 @@ function isValidCPF(cpf) {
 }
 
 exports.handler = async (event) => {
-  const cpfNumber = event.queryStringParameters && event.queryStringParameters.cpf;
+  const cpfNumber = event.queryStringParameters.cpf;
 
   if (!cpfNumber || !isValidCPF(cpfNumber)) {
     return {
