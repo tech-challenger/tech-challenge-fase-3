@@ -1,0 +1,23 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+    - dev
+    - uat
+    - prd
+
+  jobs:
+    deploy_lambda:
+      runs-on: ubuntu-lastest
+      steps:
+        - uses: actions/checkout@v2
+        - uses: actions/setup-node@v2
+          witch:
+            node-version: '20'
+        - name: npm install
+          env:
+            CI: true
+          run:
+            npm: ci
+
