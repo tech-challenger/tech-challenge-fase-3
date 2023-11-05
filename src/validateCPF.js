@@ -5,18 +5,11 @@ function isValidCPF(cpf) {
 
 exports.handler = async (event) => {
   try {
-    const requestBody = JSON.parse(event.body);
+    const requestBody = event.body;
 
-    if (!requestBody || !requestBody.cpf) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ message: 'Invalid request: Missing or malformed CPF parameter in the body' })
-      };
-    }
+ 
 
-    const cpfNumber = requestBody.cpf;
-
-    if (!isValidCPF(cpfNumber)) {
+    if (isValidCPF(requestBody)) {
       return {
         statusCode: 400,
         body: JSON.stringify({ message: 'Invalid CPF number' })
