@@ -13,10 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Change to Serverless Service Directory
-        run: cd tech-challenge-fase-3 
-        working-directory: tech-challenge-fase-3 
-
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
