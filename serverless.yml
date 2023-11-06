@@ -8,5 +8,7 @@ provider:
 functions:
   hello:
     handler: src/validateCPF.handler
-    timeout: 60 # seconds
-    memorySize: 128 # mb
+    events:
+      - http:
+          path: validateCPF
+          method: get
