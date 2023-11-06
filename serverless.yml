@@ -1,0 +1,14 @@
+service: validateCPF
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: us-east-1
+
+functions:
+  hello:
+    handler: src/validateCPF.handler
+    events:
+      - http:
+          path: validateCPF
+          method: get
